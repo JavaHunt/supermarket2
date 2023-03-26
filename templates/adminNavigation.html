@@ -1,0 +1,15 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}">
+<br>
+<ul class="topnav" style="background-color: #3a55ec;border-radius:10px;">
+    <li><p style="width:100px; color:white">shop logo </p></li>
+    <li><p style="width:400px; color:white">Shop Name</p></li>
+    <li><a href="{% url 'smadmin' %}" class={{home}}>Home</a></li>
+    <li><a href="{% url 'editStock' %}" class={{new}}>Edit Price</a></li>
+    <li><a href="{% url 'addstock' %}" class={{stocks}}>Add Stock</a></li>
+    <li><a class={{analysis}}>Analysis</a></li>
+    <li><a href="{% url 'adminstocksAvailable' %}" class={{stocksAvailable}}>Stocks Available</a></li>
+    <li><a href="{% url 'logout' %}" class={{logout}}>LogOut</a></li>
+</ul>
+<br><br>

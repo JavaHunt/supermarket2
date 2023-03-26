@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Print Bill </title>
+        <script type="text/javascript" src="{% static 'js/bill-script.js' %}"></script>
+        <!--<script type="text/javascript" src="{% static 'js/printbill.json' %}"></script>-->
+        <!--<script type="module" src="{% static 'js/getdata.js' %}"></script>-->
+        <script>
+            //window.onload = function(){
+                //import configData from 'js/printbill.json';
+                //mydata = JSON.stringify(configData);
+                //mydata = JSON.parse(data);
+                //const response = await fetch("js/printbill.json");
+                //const data = await response.json();
+                //alert(mydata["name"]);
+            //};
+            //const fs = require('fs');
+        </script>
+    </head>
+    <body >
+        <h2>BILL</h2>
+        <h1>SHOP NAME</h1>
+        <h4>Bill No. {{bill_no}}</h4>
+        <h5>Shop Address</h5>
+        <p>Date & Time : {{date}}  &   {{time}}</p>
+        <p>Given By : {{uname}} </p>
+        <table id="itemsbill">
+            <tr>
+                <th>sl</th>
+                <th>Item Name</th>
+                <th>Qnty</th>
+                <th>Rate</th>
+                <th>Save</th>
+                <th>Total</th>
+            </tr>
+            {% for row in print_data%}
+                <tr>
+                    {% for i in row %}
+                        <td>
+                            {{i}}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td><h3> Total </h3></td>
+                <td></td>
+                <td></td>
+                <td><h3> {{total}} </h3></td>
+            </tr>
+            
+        </table>
+        <h1> Save : {{save}} </h1>
+        <h2> ** Thanks you.. Visit Again **</h2>
+        <a href="{% url 'deleteTemp' %}"><button onclick="window.print()">Print</button></a>
+    </body>
+</html>

@@ -1,0 +1,173 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Stocks Available
+        </title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/admin3.css' %}">
+    </head>
+    
+    <body>
+        {% include 'adminNavigation.html' with home="active" %}
+        <br>
+        <!-- Previous Day Transactions -->
+        <div class="data-table">
+            Previous Day Transactions
+            <h4>Max Frequent Stocks </h4>
+            <table>
+                <tr>
+                    <th>Product Name</th>
+                    <th> Quantity Purchased </th>
+                </tr>
+                {% for dict in max_freq_stocks %}
+                    <tr>
+                        <td>{{dict.product_name}}</td>
+                        <td>{{dict.qnty}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <h4>Min Frequent Stocks </h4>
+            <table >
+                <tr>
+                    <th>Product Name</th>
+                    <th> Quantity Purchased </th>
+                </tr>
+                {% for dict in min_freq_stocks %}
+                    <tr>
+                        <td>{{dict.product_name}}</td>
+                        <td>{{dict.qnty}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br><br>
+        </div>
+
+        <!-- Previous week Transactions -->
+        <div class="data-table">
+            Week Transactions
+            <h4>Max Week Frequent Stocks </h4>
+            <table>
+                <tr>
+                    <th>Product Name</th>
+                    <th> Quantity Purchased </th>
+                </tr>
+                {% for dict in max_week_freq_stocks %}
+                    <tr>
+                        <td>{{dict.product_name}}</td>
+                        <td>{{dict.qnty}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <h4>Min week Frequent Stocks </h4>
+            <table>
+                <tr>
+                    <th>Product Name</th>
+                    <th> Quantity Purchased </th>
+                </tr>
+                {% for dict in min_week_freq_stocks %}
+                    <tr>
+                        <td>{{dict.product_name}}</td>
+                        <td>{{dict.qnty}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- Pipeline -->
+        <div class="pipeline">
+            <form action="" method="post"> {% csrf_token %}
+                <input type="text" id="Bill_NO" name="Bill_NO" style="display:none">
+                <input type="text" id="paid" name="paid" style="display:none">
+                <input type="text" id="type_of_trans" name="type_of_trans" style="display:none">
+                <input type="submit" value="Paid" onclick="paid_or_not()" style="margin-left:200px">
+                <table>
+                    <tr>
+                        <th> Token </th>
+                        <th> Bill No </th>
+                        <th> Time </th>
+                        <th> Amount </th>
+                        <th> Paid </th>
+                    </tr>
+                    {% for dict in pipeline_stocks %}
+                        <tr>
+                            <td>{{dict.token}}</td>
+                            <td><input value="{{dict.id}}" name="{{dict.id}}" style="border:none; text-align:center" disabled></td>
+                            <td>{{dict.transtime}}</td>
+                            <td>{{dict.amount}}</td>
+                            <td>{{dict.paid}}</td>
+                            <td><input type="submit" value="Select" onclick="set_bill_no('{{dict.id}}')"></td>
+                            <!--
+                            {% if true %}
+                                <td style="background-color:green">Yes</td>
+                            {% else %}
+                                <td style="background-color:red">No</td>
+                            {% endif %}
+                            -->
+                                
+                        </tr>
+                    {% endfor %}
+                    
+                </table>
+            </form>
+        </div>
+
+        <div style="margin-left:40%; margin-top:-20%">
+            <h3>Bill NO : {{billNo}}</h3>
+            <h3>Customer : {{phno}} </h3>
+            <table>
+                <tr>
+                    <th> ID</th>
+                    <th>Name</th>
+                    <th>Quantity </th>
+                    <th>Price</th>
+                    <th>Save </th>
+                    <th>Total </th>
+                </tr>
+                {% for trans in transactions %}
+                    <tr>
+                        <td>{{trans.product_no}}</td>
+                        <td>{{trans.product_name}}</td>
+                        <td>{{trans.qnty}}</td>
+                        <td>{{trans.price}}</td>
+                        <td>{{trans.save}}</td>
+                        <td>{{trans.total}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br><br>
+            
+            <input type="radio" id="cash" name="transtype" value="cash">
+            <label for="cash">cash </label>
+            <input type="radio" id="upi" name="transtype" value="upi">
+            <label for="upi">UPI </label>
+            <input type="radio" id="credit" name="transtype" value="credit">
+            <label for="credit">Credit Card</label>
+            <input type="radio" id="debit" name="transtype" value="debit">
+            <label for="debit">Debit Card </label><br><br>
+            
+        </div>
+
+        <script>
+            function set_bill_no(num){
+                document.getElementById("Bill_NO").value = num;
+            }
+
+            function paid_or_not(){
+                document.getElementById("paid").value = "yes";
+                var ele = document.getElementsByName('transtype');
+          
+                for(i = 0; i < ele.length; i++) {
+                    if(ele[i].checked){
+                        document.getElementById("type_of_trans").value = ele[i].value;
+                        break;
+                    }
+                }
+            }
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            Add Transaction
+        </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bill-page.css' %}">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <script type="module" src="{% static 'js/billing1.js' %}"></script>
+        
+    </head>
+    <script type="text/javascript" src="{% static 'js/bill-script8.js' %}"></script>
+    
+
+  <body>
+    {% include 'navigation.html' with new="active" %}
+    <div class="data">
+      <table>
+      <form action="" method="post"> {% csrf_token %}
+        <button class="btn btn-warning" style="margin-left: 40%;">Start Scanning </button>
+          <h2 style="padding-left: 40%;">Add New Item</h2>
+          <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+          </tr>
+          <tr>
+            <td><label for="num">Mobile Number </label></td>
+            <td><input type="text" id="num" name="num"><br><br></td>
+            <td><h4>Gender </h4></td>
+            <td><input type="radio" id="male" name="gender" value="male">
+              <label for="male">Male </label>
+              <input type="radio" id="female" name="gender" value="female">
+              <label for="female">Female </label>
+              <input type="radio" id="others" name="gender" value="others">
+              <label for="others">others </label><br><br></td>
+          </tr>
+          <tr>
+              <td><label for="product">Item Name</label></td>
+              <td><input type="text" id="product" name="product" list="brow"><br><br>
+                
+                <datalist id="brow" style="">
+                  {% for product in products %}
+                    <option value="{{product}}"></option>
+                  {% endfor %}
+                </datalist>
+              </td>
+              <td><label for="Iid">Item ID</label></td>
+              <td><input type="text" id="Iid" name="Iid" onchange="fill_data()"><br><br></td>
+          </tr>
+          <tr>
+              <td><label for="item">Item qnty</label></td>
+              <td><input type="number" id="item" name="item"><br><br></td>
+              <td><label for="rate">Actual Price</label></td>
+              <td><input type="text" id="rate" name="rate" disabled><br><br></td>
+          </tr>
+          <tr>
+              <td><label for="discount">Discount Price</label> </td>
+              <td><input type="text" id="discount" name="discount"><br><br></td>
+              <td><label for="save">Save</label> </td>
+              <td><input type="text" id="save" name="save" disabled><br><br></td>
+          </tr>
+          <tr></tr>
+          <tr>
+            <td colspan="2" ><button type="button" onclick="addelement(),addelement1();" class="btn btn-outline-info" style="">Add Item</button></td>
+            <td ><a href="print-bill.html"><button type="button" id="printbtn"style="padding: 10px 20px 10px 20px;" class="btn btn-outline-info">Bill</button></a></td>
+            <td> <button onclick="download()" class="btn btn-outline-success">Save</button> </td>
+          </tr>
+      </form>
+      </table>
+  </div>
+  <!--
+  <form method='post' id='test'> {% csrf_token %}
+    <input type="hidden" value="video34"/>
+    <input type='submit' value='Test button'/>
+    <div id='message'>Initial text</div>
+  </form>
+  -->
+  <div class="addlist"><br>
+      <table id="maintable">
+          <tr name="maintable">
+              <th>Item ID</th>
+              <th > Item-Name</th>
+              <th >Quantity</th>
+              <th >Actual Price</th>
+              <th> Save </th>
+              <th >ToTal</th>
+          </tr>
+          {% for dict in scanned_products %}
+            <tr>
+              <td>{{dict.sid}}</td>
+              <td>{{dict.pname}}</td>
+              <td>1</td>
+              <td>{{dict.price}}</td>
+              <td>{{dict.save}}</td>
+              <td>{{dict.total}}</td>
+            </tr>
+          {% endfor %}
+      </table> 
+  </div>
+  <div class="addqnty"><br>
+    <table style="margin-left: 20%; width: 50%;" id="secondtable" class="list">
+      <tr>
+        <th> Item-Name</th>
+        <th>Qnty  </th>
+        <th> </th>
+      </tr>
+
+      {% for dict in scanned_products%}
+        <tr>
+          <td>{{dict.pname}}</td>
+          <td>
+            <button onclick="increment('{{dict.incIndex}}')">+</button> 
+            <input id="{{dict.incIndex}}" type=number min=1 max=1000 value="1" class='no-outline'> 
+            <button onclick="decrement('{{dict.incIndex}}')">-</button>
+          </td>
+          
+        </tr>
+      {% endfor %}
+
+      <!-- <tr>
+          <i class="fa-solid fa-trash"></i>
+          <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-minus"></i> -->
+
+    </table>
+  </div>
+  </body>
+</html>

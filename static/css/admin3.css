@@ -1,0 +1,13 @@
+body{
+    margin: 10px;
+}
+
+.pipeline{
+    float: right;
+    margin-top: -20%;
+    margin-right: 3%;
+}
+
+.data-table{
+    margin-left: 3%;
+}

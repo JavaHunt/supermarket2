@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Stocks Available
+        </title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/stocks.css' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+                   
+    </head>
+    <body>
+        {% include 'adminNavigation.html' with new="active" %}
+        <form style ="margin-left:40%" method="post"> {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleInputEmail1">SID</label>
+                <input type="text" style="width:40%" class="form-control" id="exampleInputEmail1" name="sid" aria-describedby="SID" placeholder="Enter SID" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail2">Price</label>
+                <input type="text" style="width:40%" class="form-control" id="exampleInputEmail2" name="price" aria-describedby="Price" placeholder="Enter Price" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Change Price</button>
+            </div>
+        </form>
+        <table>
+            <tr>
+                <th> SID </th>
+                <th> Name </th>
+                <th> Net Weight </th>
+                <th> Category </th>
+                <th> Available </th>
+                <th> Price </th>
+            </tr>
+            {% for dict in stocks_data %}
+                <tr id="{{dict.sid}}">
+                    <td>{{dict.sid}}</td>
+                    <td>{{dict.pname}}</td>
+                    <td>{{dict.netweight}}</td>
+                    <td>{{dict.category}}</td>
+                    <td>{{dict.count}}</td>
+                    <td>{{dict.price}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div>
+            <br>
+            <input type="text" id="myInput" style="width:30%" onkeyup="myFunction()" placeholder="Search Products..." title="Type Product Name ">
+            <br>
+            <ol id="myUL1" class="list-group" style="width:40%">
+                {% for dict in stocks_data %}
+
+                    <li class="list-group-item" ><a href="#{{dict.sid}}" style="color:red">{{dict.pname}}</a></li>
+                    <br>
+                {% endfor %}
+            </ol>
+        </div>
+
+        <script>
+            function myFunction() {
+                var input, filter, ul, li, a, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                ul = document.getElementById("myUL1");
+                li = ul.getElementsByTagName("li");
+                for (i = 0; i < li.length; i++) {
+                    a = li[i].getElementsByTagName("a")[0];
+                    txtValue = a.textContent || a.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            }
+            </script>
+    </body>
+</html>

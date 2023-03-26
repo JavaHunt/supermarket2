@@ -1,0 +1,62 @@
+* {
+  box-sizing: border-box;
+}
+.addlist{
+  float: left;
+  width: 45%;
+  margin-top:50px;
+  border:solid 2px gray ;
+  margin-left: 65px;
+  padding-left: 10px;
+}
+table{
+	width:100%;
+	text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #D6EEEE;
+}
+.addqnty
+{
+  float: right;
+  margin-top: 50px;
+  padding-right: 10px;
+	width: 45%;
+  border:solid 2px gray ;
+  margin-right: 65px;
+
+}
+button{
+	background-color: white;
+}
+
+input {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: groove;
+  background-color: #eee;
+}
+ 
+.openBtn {
+  display: flex;
+  justify-content: left;
+}
+
+.data {
+  position: relative;
+  width: 90%;
+  border: 3px solid #999999;
+  margin-left: 70px;
+} 
+label{
+  font-size: 20px;
+}
+/* button{
+  border-radius: 20px;
+} */
+
+#brow {
+  height: 10px;
+}
